@@ -18,8 +18,9 @@
 //     <0=> STM32 F1
 //     <1=> STM32 F4
 //     <2=> STM32 H7
+//     <3=> STM32 G4
 // <i> 选择所使用的 MCU 型号
-#define configMCU_TYPE 0
+#define configMCU_TYPE 1
 
 #if configMCU_TYPE == 0
 #include "stm32f1xx_hal.h"
@@ -27,6 +28,8 @@
 #include "stm32f4xx_hal.h"
 #elif configMCU_TYPE == 2
 #include "stm32h7xx_hal.h"
+#elif configMCU_TYPE == 3
+#include "stm32g4xx_hal.h"
 #endif
 
 // 针对不同的编译器调用不同的 stdint.h 头文件
@@ -54,7 +57,6 @@ extern uint32_t SystemCoreClock;
 // <e> 开启断言
 #define configUSE_ASSERT_INFO 0
 // </e> !开启断言
-
 #if configUSE_ASSERT_INFO == 1
 #include "bsp_usart.h"
 #define vAssertCalled(char, int) printf("Error: %s, %d\r\n", char, int)
@@ -165,13 +167,13 @@ extern uint32_t SystemCoreClock;
 // </e> !动态内存申请
 
 // <e> 静态内存分配
-#define configSUPPORT_STATIC_ALLOCATION	 1
+#define configSUPPORT_STATIC_ALLOCATION	 0
 // </e> !静态内存分配
 
 // <o> 系统总的堆大小
 // <i> 单位: KB (1024 bytes)
 // <i> 默认: 36KB (36 * 1024)
-#define configTOTAL_HEAP_SIZE ( (size_t)( 36 * 1024 ) )
+#define configTOTAL_HEAP_SIZE ((size_t)(36 * 1024))
 // </h> !FreeRTOS 与内存申请有关配置选项
 
 // <h> FreeRTOS 与钩子函数有关的配置选项
@@ -186,7 +188,7 @@ extern uint32_t SystemCoreClock;
 // <i> 因此必须保证空闲任务可以被 CPU 执行
 // <i> 使用空闲钩子函数设置 CPU 进入省电模式是很常见的
 // <i> 不可以调用会引起空闲任务阻塞的 API 函数
-#define configUSE_IDLE_HOOK	1
+#define configUSE_IDLE_HOOK	0
 // </e> !使能空闲钩子
 
 // <e> 使能时间片钩子
@@ -242,7 +244,7 @@ extern uint32_t SystemCoreClock;
 // </e> !使能协程功能
 
 // <o> 最大协程优先级数目
-#define configMAX_CO_ROUTINE_PRIORITIES ( 2 )
+#define configMAX_CO_ROUTINE_PRIORITIES (2)
 // </h> !FreeRTOS 与协程有关的配置选项
 
 // <h> FreeRTOS 与软件定时器有关的配置选项
@@ -254,14 +256,14 @@ extern uint32_t SystemCoreClock;
 // <o> 软件定时器优先级
 // <i> 此处配置的数值是最大优先级减去的数值
 // <i> 默认: 1 (configMAX_PRIORITIES - 1)
-#define configTIMER_TASK_PRIORITY	( configMAX_PRIORITIES - 1 )
+#define configTIMER_TASK_PRIORITY (configMAX_PRIORITIES - 1)
 
 // <o> 软件定时器队列长度
-#define configTIMER_QUEUE_LENGTH	10
+#define configTIMER_QUEUE_LENGTH 10
 
 // <o> 软件定时器任务栈大小
 // <i> 默认: 2 (2 * configMINIMAL_STACK_SIZE(空闲任务使用的堆栈大小))
-#define configTIMER_TASK_STACK_DEPTH	( configMINIMAL_STACK_SIZE * 2 )
+#define configTIMER_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 2)
 // </h> !FreeRTOS 与软件定时器有关的配置选项
 
 // <h> FreeRTOS 可选函数配置选项
@@ -269,57 +271,61 @@ extern uint32_t SystemCoreClock;
 // <e> INCLUDE_xTaskGetSchedulerState
 // <i> 此宏定义必须设置为 1 才能
 // <i> 使用 xTaskGetSchedulerState() 这个 API 函数接口。
-#define INCLUDE_xTaskGetSchedulerState  1
+#define INCLUDE_xTaskGetSchedulerState 1
 // </e> !INCLUDE_xTaskGetSchedulerState
 
 // <e> INCLUDE_vTaskPrioritySet
 // <i> 此宏定义必须设置为 1 才能使用 vTaskPrioritySet() 这个 API 函数接口。
-#define INCLUDE_vTaskPrioritySet		1
+#define INCLUDE_vTaskPrioritySet 1
 // </e> !INCLUDE_vTaskPrioritySet
 
 // <e> INCLUDE_uxTaskPriorityGet
 // <i> 此宏定义必须设置为 1 才能使用 uxTaskPriorityGet() 这个 API 函数接口。
-#define INCLUDE_uxTaskPriorityGet		1
+#define INCLUDE_uxTaskPriorityGet 1
 // </e> !INCLUDE_uxTaskPriorityGet
 
 // <e> INCLUDE_vTaskDelete
 // <i> 此宏定义必须设置为 1 才能使用 vTaskDelete() 这个 API 函数接口。
-#define INCLUDE_vTaskDelete				1
+#define INCLUDE_vTaskDelete 1
 // </e> !INCLUDE_vTaskDelete
 
 // <e> INCLUDE_vTaskCleanUpResources
-#define INCLUDE_vTaskCleanUpResources	0
+#define INCLUDE_vTaskCleanUpResources 1
 // </e> !INCLUDE_vTaskCleanUpResources
 
 // <e> INCLUDE_vTaskSuspend
-#define INCLUDE_vTaskSuspend			1
+#define INCLUDE_vTaskSuspend 1
 // </e> !INCLUDE_vTaskSuspend
 
 // <e> INCLUDE_vTaskDelayUntil
-#define INCLUDE_vTaskDelayUntil			1
+#define INCLUDE_vTaskDelayUntil 1
 // </e> !INCLUDE_vTaskDelayUntil
 
 // <e> INCLUDE_vTaskDelay
-#define INCLUDE_vTaskDelay				1
+#define INCLUDE_vTaskDelay 1
 // </e> !INCLUDE_vTaskDelay
 
 // <e> INCLUDE_eTaskGetState
-#define INCLUDE_eTaskGetState			1
+#define INCLUDE_eTaskGetState 1
 // </e> !INCLUDE_eTaskGetState
 
 // <e> INCLUDE_xTimerPendFunctionCall
-#define INCLUDE_xTimerPendFunctionCall	1
+#define INCLUDE_xTimerPendFunctionCall 1
 // </e> !INCLUDE_xTimerPendFunctionCall
 // </h> !FreeRTOS 可选函数配置选项
 
 // <h> FreeRTOS 与中断有关的配置选项
 // =====================================================================
 #ifdef __NVIC_PRIO_BITS
-#define configPRIO_BITS        __NVIC_PRIO_BITS
+#if (__NVIC_PRIO_BITS == 4)
+#define configPRIO_BITS 4
+#elif (__NVIC_PRIO_BITS == 3)
+#define configPRIO_BITS 5
 #else
 // <o> 中断优先级位数
-#define configPRIO_BITS        4
-#endif
+#define configPRIO_BITS 4
+#endif // (__NVIC_PRIO_BITS == 4)
+#endif // __NVIC_PRIO_BITS
 
 // <o> 中断最低优先级
 #define configLIBRARY_LOWEST_INTERRUPT_PRIORITY	15
@@ -329,19 +335,16 @@ extern uint32_t SystemCoreClock;
 // </h> !FreeRTOS 与中断有关的配置选项
 
 #define configKERNEL_INTERRUPT_PRIORITY \
-    (configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
+    (configLIBRARY_LOWEST_INTERRUPT_PRIORITY << configPRIO_BITS)
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY \
-    (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
+    (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << configPRIO_BITS)
 
 // <h> FreeRTOS 与中断服务函数有关的配置选项
 // =====================================================================
-#define xPortPendSVHandler vPortSVCHandler
-#define vPortSVCHandler SVC_Handler
-
 #if (configUSE_TRACE_FACILITY == 1)
 #include "trcRecorder.h"
 // <e> 启用被 Trace 源码调用的可选函数
-#define INCLUDE_xTaskGetCurrentTaskHandle 0
+#define INCLUDE_xTaskGetCurrentTaskHandle 1
 // </e> !启用被 Trace 源码调用的可选函数
 #endif
 // </h> !FreeRTOS 与中断服务函数有关的配置选项
