@@ -90,7 +90,7 @@ extern uint32_t SystemCoreClock;
 // <i>
 // <i> 选择特殊方法可以提高 FreeRTOS 在特定硬件上的运行效率, 但也会增加代码量
 // <i> 因此, 请根据具体硬件情况选择合适的方法!
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION	1
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION	0
 
 // <e> 低功耗 tickless 模式
 // <i> 0 Disable: 保持系统节拍 (tick) 中断一直运行
@@ -100,9 +100,8 @@ extern uint32_t SystemCoreClock;
 #define configUSE_TICKLESS_IDLE 0
 // </e> !低功耗 tickless 模式
 
-// <o> CPU 内核时钟频率
-// <i> 无需修改, 自动获取
-// <i> 默认: SystemCoreClock (自动获取)
+// <o> CPU 内核时钟频率 (MHz)
+// <i> 自动获取, 无需更改
 // <i> 写入实际的 CPU 内核时钟频率, 即 CPU 指令执行频率, 通常为 Fclk
 // <i> Fclk 为供给 CPU 内核的时钟信号, 我们所说的 CPU 主频为 XX MHZ
 // <i> 就是指的这个时钟信号, 相应的, 1/Fclk 就是 CPU 时钟周期 Tclk
@@ -167,10 +166,10 @@ extern uint32_t SystemCoreClock;
 // </e> !动态内存申请
 
 // <e> 静态内存分配
-#define configSUPPORT_STATIC_ALLOCATION	 0
+#define configSUPPORT_STATIC_ALLOCATION	 1
 // </e> !静态内存分配
 
-// <o> 系统总的堆大小
+// <o> 系统总的堆大小 (KB)
 // <i> 单位: KB (1024 bytes)
 // <i> 默认: 36KB (36 * 1024)
 #define configTOTAL_HEAP_SIZE ((size_t)(36 * 1024))
@@ -232,7 +231,7 @@ extern uint32_t SystemCoreClock;
 // <i> - prvWriteNametoBuffer()
 // <i> - vTaskList()
 // <i> - vTaskGetRunTimeStats()
-#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 0
 // </e> !统计格式化函数
 // </h> !FreeRTOS 与运行时间和任务状态收集有关的配置选项
 
@@ -344,7 +343,7 @@ extern uint32_t SystemCoreClock;
 #if (configUSE_TRACE_FACILITY == 1)
 #include "trcRecorder.h"
 // <e> 启用被 Trace 源码调用的可选函数
-#define INCLUDE_xTaskGetCurrentTaskHandle 1
+#define INCLUDE_xTaskGetCurrentTaskHandle 0
 // </e> !启用被 Trace 源码调用的可选函数
 #endif
 // </h> !FreeRTOS 与中断服务函数有关的配置选项
