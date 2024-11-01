@@ -15,6 +15,7 @@
 // <<< Use Configuration Wizard in Context Menu >>>
 
 // <o> MCU 型号选择
+// =====================================================================
 //     <0=> STM32 F1
 //     <1=> STM32 F4
 //     <2=> STM32 H7
@@ -43,11 +44,13 @@ extern uint32_t SystemCoreClock;
 // <o> RTOS 调度器类型
 //     <0=> [0] 协作式调度器(时间片)
 //     <1=> [1] 抢占式调度器
+// <i> configUSE_PREEMPTION
 // <i> 在多任务管理机制上，操作系统可以分为抢占式和协作式两种。
 // <i> 协作式操作系统是任务主动释放 CPU 后，切换到下一个任务。
 #define configUSE_PREEMPTION 1
 
 // <e> 时间片调度
+// <i> configUSE_TIME_SLICING
 // <i> 默认: 1 (Enable)
 // <i> 时间片调度是指当一个任务运行一段时间后，操作系统会自动切换到下一个任务。
 // <i> 时间片的大小由 configTICK_RATE_HZ 决定。
@@ -66,6 +69,7 @@ extern uint32_t SystemCoreClock;
 // <o> 选择下一个执行任务的方法
 //     <0=> [0] 通用方法
 //     <1=> [1] 特殊方法
+// <i> configUSE_PORT_OPTIMISED_TASK_SELECTION
 // <i> 选择下一任务执行的方法, 0 为通用方法, 1 为特殊方法
 // <i>
 // <i> 某些运行 FreeRTOS 的硬件有两种方法选择下一个要执行的任务
@@ -93,6 +97,7 @@ extern uint32_t SystemCoreClock;
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION	0
 
 // <e> 低功耗 tickless 模式
+// <i> configUSE_TICKLESS_IDLE
 // <i> 0 Disable: 保持系统节拍 (tick) 中断一直运行
 // <i> 1 Enable: 低功耗 tickless 模式
 // <i> 低功耗 tickless 模式可以减少系统的功耗, 但也会降低系统的响应速度
@@ -101,6 +106,7 @@ extern uint32_t SystemCoreClock;
 // </e> !低功耗 tickless 模式
 
 // <o> CPU 内核时钟频率 (MHz)
+// <i> configCPU_CLOCK_HZ
 // <i> 自动获取, 无需更改
 // <i> 写入实际的 CPU 内核时钟频率, 即 CPU 指令执行频率, 通常为 Fclk
 // <i> Fclk 为供给 CPU 内核的时钟信号, 我们所说的 CPU 主频为 XX MHZ
@@ -108,52 +114,65 @@ extern uint32_t SystemCoreClock;
 #define configCPU_CLOCK_HZ (SystemCoreClock)
 
 // <o> RTOS 系统节拍中断频率 (Hz)
+// <i> configTICK_RATE_HZ
 // <i> 即一秒钟中断的次数, 每次中断 RTOS 都会进任务调度
 #define configTICK_RATE_HZ ((TickType_t)1000)
 
 // <o> 可使用的最大优先级
+// <i> configMAX_PRIORITIES
 #define configMAX_PRIORITIES (32)
 
 // <o> 空闲任务使用的堆栈大小
+// <i> configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE ((unsigned short )128)
 
 // <o> 任务名字字符串长度
+// <i> configMAX_TASK_NAME_LEN
 #define configMAX_TASK_NAME_LEN	(16)
 
 // <o> 系统节拍计数器变量数据类型
 //     <0=> [0] 32-bit int
 //     <1=> [1] 16-bit int
+// <i> configUSE_16_BIT_TICKS
 // <i> TickType_t 变量用于表示系统节拍计数器的计数值
 #define configUSE_16_BIT_TICKS 0
 
 // <e> 空闲任务放弃 CPU 使用权给其他同优先级的用户任务
+// <i> configIDLE_SHOULD_YIELD
 #define configIDLE_SHOULD_YIELD	1
 // </e> !空闲任务放弃 CPU 使用权给其他同优先级的用户任务
 
 // <e> 启用队列
+// <i> configUSE_QUEUE_SETS
 #define configUSE_QUEUE_SETS 1
 // </e> !启用队列
 
 // <e> 使能任务通知功能
+// <i> configUSE_TASK_NOTIFICATIONS
 #define configUSE_TASK_NOTIFICATIONS 1
 // </e> !使能任务通知功能
 
 // <e> 使能互斥信号量
+// <i> configUSE_MUTEXES
 #define configUSE_MUTEXES 1
 // </e> !使能互斥信号量
 
 // <e> 使能递归互斥信号量
+// <i> configUSE_RECURSIVE_MUTEXES
 #define configUSE_RECURSIVE_MUTEXES	1
 // </e> !使能递归互斥信号量
 
 // <e> 使能计数信号量
+// <i> configUSE_COUNTING_SEMAPHORES
 #define configUSE_COUNTING_SEMAPHORES 1
 // </e> !使能计数信号量
 
 // <o> 可注册的信号量和消息队列个数
+// <i> configQUEUE_REGISTRY_SIZE
 #define configQUEUE_REGISTRY_SIZE 10
 
 // <e> 设置任务标签功能
+// <i> configUSE_APPLICATION_TASK_TAG
 #define configUSE_APPLICAITON_TASK_TAG 0
 // </e> !设置任务标签功能
 // </h> !FreeRTOS 基础配置配置选项
@@ -162,14 +181,17 @@ extern uint32_t SystemCoreClock;
 // <h> FreeRTOS 与内存申请有关配置选项
 // =====================================================================
 // <e> 动态内存申请
+// <i> configSUPPORT_DYNAMIC_ALLOCATION
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 // </e> !动态内存申请
 
 // <e> 静态内存分配
+// <i> configSUPPORT_STATIC_ALLOCATION
 #define configSUPPORT_STATIC_ALLOCATION	 1
 // </e> !静态内存分配
 
 // <o> 系统总的堆大小 (KB)
+// <i> configTOTAL_HEAP_SIZE
 // <i> 单位: KB (1024 bytes)
 // <i> 默认: 36KB (36 * 1024)
 #define configTOTAL_HEAP_SIZE ((size_t)(36 * 1024))
@@ -178,6 +200,7 @@ extern uint32_t SystemCoreClock;
 // <h> FreeRTOS 与钩子函数有关的配置选项
 // =====================================================================
 // <e> 使能空闲钩子
+// <i> configUSE_IDLE_HOOK
 // <i> 0 Disable: 忽略空闲钩子
 // <i> 1 Enable: 使用空闲钩子
 // <i> 空闲钩子是一个函数, 该函数由用户来实现
@@ -191,6 +214,7 @@ extern uint32_t SystemCoreClock;
 // </e> !使能空闲钩子
 
 // <e> 使能时间片钩子
+// <i> configUSE_TICK_HOOK
 // <i> 0 Disable: 忽略时间片钩子
 // <i> 1 Enable: 使用时间片钩子
 // <i> 时间片钩子是一个函数, 该函数由用户来实现
@@ -202,6 +226,7 @@ extern uint32_t SystemCoreClock;
 // </e> !使能时间片钩子
 
 // <e> 使能内存申请失败钩子
+// <i> configUSE_MALLOC_FAILED_HOOK
 #define configUSE_MALLOC_FAILED_HOOK	0
 // </e> !使能内存申请失败钩子
 
@@ -209,6 +234,7 @@ extern uint32_t SystemCoreClock;
 //     <0=> [0] 不启用
 //     <1=> [1] 栈顶指针检测
 //     <2=> [2] 栈底指针检测
+// <i> configCHECK_FOR_STACK_OVERFLOW
 // <i> 若使用此功能: 用户必须提供一个栈溢出钩子函数
 #define configCHECK_FOR_STACK_OVERFLOW 0
 // </h> !FreeRTOS 与钩子函数有关的配置选项
@@ -216,16 +242,19 @@ extern uint32_t SystemCoreClock;
 // <h> FreeRTOS 与运行时间和任务状态收集有关的配置选项
 // =====================================================================
 // <e> 运行时间统计功能
+// <i> configGENERATE_RUN_TIME_STATS
 #define configGENERATE_RUN_TIME_STATS 0
 // </e> !运行时间统计功能
 
 /* 启用可视化跟踪调试 */
 
 // <e> 可视化跟踪调试
+// <i> configUSE_TRACE_FACILITY
 #define configUSE_TRACE_FACILITY 0
 // </e> !可视化跟踪调试
 
 // <e> 统计格式化函数
+// <i> configUSE_STATS_FORMATTING_FUNCTIONS
 // <i> 与运行时间统计功能同时使能时启用任务跟踪功能
 // <i> 启用后会编译下面 3 个函数:
 // <i> - prvWriteNametoBuffer()
@@ -238,29 +267,35 @@ extern uint32_t SystemCoreClock;
 // <h> FreeRTOS 与协程有关的配置选项
 // =====================================================================
 // <e> 使能协程功能
+// <i> configUSE_CO_ROUTINES
 // <i> 启用后必须添加文件 croutine.c 
 #define configUSE_CO_ROUTINES 0
 // </e> !使能协程功能
 
 // <o> 最大协程优先级数目
+// <i> configMAX_CO_ROUTINE_PRIORITIES
 #define configMAX_CO_ROUTINE_PRIORITIES (2)
 // </h> !FreeRTOS 与协程有关的配置选项
 
 // <h> FreeRTOS 与软件定时器有关的配置选项
 // =====================================================================
 // <e> 使能软件定时器
+// <i> configUSE_TIMERS
 #define configUSE_TIMERS 1
 // </e> !使能软件定时器
 
 // <o> 软件定时器优先级
+// <i> configTIMER_TASK_PRIORITY
 // <i> 此处配置的数值是最大优先级减去的数值
 // <i> 默认: 1 (configMAX_PRIORITIES - 1)
 #define configTIMER_TASK_PRIORITY (configMAX_PRIORITIES - 1)
 
 // <o> 软件定时器队列长度
+// <i> configTIMER_QUEUE_LENGTH
 #define configTIMER_QUEUE_LENGTH 10
 
 // <o> 软件定时器任务栈大小
+// <i> configTIMER_TASK_STACK_DEPTH
 // <i> 默认: 2 (2 * configMINIMAL_STACK_SIZE(空闲任务使用的堆栈大小))
 #define configTIMER_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 2)
 // </h> !FreeRTOS 与软件定时器有关的配置选项
@@ -322,14 +357,17 @@ extern uint32_t SystemCoreClock;
 #define configPRIO_BITS 5
 #else
 // <o> 中断优先级位数
+// <i> configPRIO_BITS
 #define configPRIO_BITS 4
 #endif // (__NVIC_PRIO_BITS == 4)
 #endif // __NVIC_PRIO_BITS
 
 // <o> 中断最低优先级
+// <i> configLIBRARY_LOWEST_INTERRUPT_PRIORITY
 #define configLIBRARY_LOWEST_INTERRUPT_PRIORITY	15
 
 // <o> 系统可管理的最高中断优先级
+// <i> configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
 #define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
 // </h> !FreeRTOS 与中断有关的配置选项
 
@@ -343,6 +381,7 @@ extern uint32_t SystemCoreClock;
 #if (configUSE_TRACE_FACILITY == 1)
 #include "trcRecorder.h"
 // <e> 启用被 Trace 源码调用的可选函数
+// <i> INCLUDE_xTaskGetCurrentTaskHandle
 #define INCLUDE_xTaskGetCurrentTaskHandle 0
 // </e> !启用被 Trace 源码调用的可选函数
 #endif
