@@ -1,12 +1,16 @@
 /**
+ * ****************************************************************************
  * @file FreeRTOSConfig.h
  * @author SprInec (JulyCub@163.com)
  * @brief FreeRTOS Configuration File
- * @version 0.1
- * @date 2024.10.31
- * 
+ * @version 1.1
+ * @date 2024.10.31       -> 1.0 : Created
+ * ****************************************************************************
+ * @update 2024.11.01     -> 1.1 : Optimized comments. Added MCU, CMSIS
+ *                                 Configuration Wizard and libstm adaptation.
+ *
  * @copyright Copyright (c) 2024
- * 
+ * ****************************************************************************
  */
 
 #ifndef FREERTOS_CONFIG_H
@@ -14,8 +18,9 @@
 
 // <<< Use Configuration Wizard in Context Menu >>>
 
-// <o> MCU 型号选择
+// <h> 工程环境配置选项
 // =====================================================================
+// <o> MCU 型号选择
 //     <0=> STM32 F1
 //     <1=> STM32 F4
 //     <2=> STM32 H7
@@ -23,21 +28,49 @@
 // <i> 选择所使用的 MCU 型号
 #define configMCU_TYPE 1
 
-#if configMCU_TYPE == 0
+// <o> STM32开发库选择
+//     <0=> STD
+//     <1=> HAL
+// <i> 选择所使用的 STM32 开发库
+// <i> STD: 标准库
+// <i> HAL: 硬件抽象层库
+// <i> 注: STM32 H7 与 STM32 G4 芯片仅支持 HAL 库
+#define configSTM32_LIB 1
+
+// <e> libstm
+// <i> 使用 libstm 库
+#define configUSE_LIBSTM 1
+// </e> !libstm
+
+#if (configSTM32_LIB == 0)
+#if (configMCU_TYPE == 0)
+#include "stm32f10x.h"
+
+#elif (configMCU_TYPE == 1)
+#include "stm32f40x.h"
+#endif /* !configMCU_TYPE */
+
+#elif (configSTM32_LIB == 1) 
+#if (configMCU_TYPE == 0)
 #include "stm32f1xx_hal.h"
-#elif configMCU_TYPE == 1
+
+#elif (configMCU_TYPE == 1)
 #include "stm32f4xx_hal.h"
-#elif configMCU_TYPE == 2
+
+#elif (configMCU_TYPE == 2)
 #include "stm32h7xx_hal.h"
-#elif configMCU_TYPE == 3
+
+#elif (configMCU_TYPE == 3)
 #include "stm32g4xx_hal.h"
-#endif
+#endif /* !configMCU_TYPE */
+#endif /* !configSTM32_LIB */
 
 // 针对不同的编译器调用不同的 stdint.h 头文件
 #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
 #include <stdint.h>
 extern uint32_t SystemCoreClock;
 #endif
+// </h> !工程环境配置选项
 
 // <h> FreeRTOS 基础配置配置选项
 // =====================================================================
@@ -60,7 +93,7 @@ extern uint32_t SystemCoreClock;
 // <e> 开启断言
 #define configUSE_ASSERT_INFO 0
 // </e> !开启断言
-#if configUSE_ASSERT_INFO == 1
+#if configUSE_ASSERT_INFO
 #include "bsp_usart.h"
 #define vAssertCalled(char, int) printf("Error: %s, %d\r\n", char, int)
 #define configASSERT(x) if ((x) == 0) vAssertCalled(__FILE__, __LINE__)
@@ -94,7 +127,7 @@ extern uint32_t SystemCoreClock;
 // <i>
 // <i> 选择特殊方法可以提高 FreeRTOS 在特定硬件上的运行效率, 但也会增加代码量
 // <i> 因此, 请根据具体硬件情况选择合适的方法!
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION	0
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION	1
 
 // <e> 低功耗 tickless 模式
 // <i> configUSE_TICKLESS_IDLE
@@ -122,6 +155,10 @@ extern uint32_t SystemCoreClock;
 // <i> configMAX_PRIORITIES
 #define configMAX_PRIORITIES (32)
 
+// <o> 空闲任务优先级
+// <i> configIDLE_TASK_PRIORITY
+#define configIDLE_TASK_PRIORITY ((UBaseType_t)0)
+
 // <o> 空闲任务使用的堆栈大小
 // <i> configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE ((unsigned short )128)
@@ -139,12 +176,12 @@ extern uint32_t SystemCoreClock;
 
 // <e> 空闲任务放弃 CPU 使用权给其他同优先级的用户任务
 // <i> configIDLE_SHOULD_YIELD
-#define configIDLE_SHOULD_YIELD	1
+#define configIDLE_SHOULD_YIELD	0
 // </e> !空闲任务放弃 CPU 使用权给其他同优先级的用户任务
 
 // <e> 启用队列
 // <i> configUSE_QUEUE_SETS
-#define configUSE_QUEUE_SETS 1
+#define configUSE_QUEUE_SETS 0
 // </e> !启用队列
 
 // <e> 使能任务通知功能
@@ -154,17 +191,17 @@ extern uint32_t SystemCoreClock;
 
 // <e> 使能互斥信号量
 // <i> configUSE_MUTEXES
-#define configUSE_MUTEXES 1
+#define configUSE_MUTEXES 0
 // </e> !使能互斥信号量
 
 // <e> 使能递归互斥信号量
 // <i> configUSE_RECURSIVE_MUTEXES
-#define configUSE_RECURSIVE_MUTEXES	1
+#define configUSE_RECURSIVE_MUTEXES	0
 // </e> !使能递归互斥信号量
 
 // <e> 使能计数信号量
 // <i> configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES 1
+#define configUSE_COUNTING_SEMAPHORES 0
 // </e> !使能计数信号量
 
 // <o> 可注册的信号量和消息队列个数
@@ -260,7 +297,7 @@ extern uint32_t SystemCoreClock;
 // <i> - prvWriteNametoBuffer()
 // <i> - vTaskList()
 // <i> - vTaskGetRunTimeStats()
-#define configUSE_STATS_FORMATTING_FUNCTIONS 0
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
 // </e> !统计格式化函数
 // </h> !FreeRTOS 与运行时间和任务状态收集有关的配置选项
 
@@ -344,7 +381,7 @@ extern uint32_t SystemCoreClock;
 // </e> !INCLUDE_eTaskGetState
 
 // <e> INCLUDE_xTimerPendFunctionCall
-#define INCLUDE_xTimerPendFunctionCall 1
+#define INCLUDE_xTimerPendFunctionCall 0
 // </e> !INCLUDE_xTimerPendFunctionCall
 // </h> !FreeRTOS 可选函数配置选项
 
@@ -378,7 +415,7 @@ extern uint32_t SystemCoreClock;
 
 // <h> FreeRTOS 与中断服务函数有关的配置选项
 // =====================================================================
-#if (configUSE_TRACE_FACILITY == 1)
+#if (configUSE_TRACE_FACILITY)
 #include "trcRecorder.h"
 // <e> 启用被 Trace 源码调用的可选函数
 // <i> INCLUDE_xTaskGetCurrentTaskHandle
