@@ -86,6 +86,8 @@ extern uint32_t SystemCoreClock;
 // <i> configUSE_TIME_SLICING
 // <i> 默认: 1 (Enable)
 // <i> 时间片调度是指当一个任务运行一段时间后，操作系统会自动切换到下一个任务。
+// <i> 当使能此项后,处于就绪态的多个相同优先级任务将会以时间片切换的方式共享处理器。
+// <i> 时间片调度可以提高系统的吞吐量, 但也会降低系统的响应速度/实时性。
 // <i> 时间片的大小由 configTICK_RATE_HZ 决定。
 #define configUSE_TIME_SLICING 1
 // </e> !时间片调度
@@ -224,7 +226,7 @@ extern uint32_t SystemCoreClock;
 
 // <e> 静态内存分配
 // <i> configSUPPORT_STATIC_ALLOCATION
-#define configSUPPORT_STATIC_ALLOCATION	 1
+#define configSUPPORT_STATIC_ALLOCATION	 0
 // </e> !静态内存分配
 
 // <o> 系统总的堆大小 (KB)
