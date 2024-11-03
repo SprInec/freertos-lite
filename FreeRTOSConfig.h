@@ -341,6 +341,38 @@ extern uint32_t SystemCoreClock;
 
 // <h> FreeRTOS 可选函数配置选项
 // =====================================================================
+// <e> INCLUDE_vTaskSuspend
+// <i> 任务挂起函数/任务恢复函数
+// <i> 此宏定义必须设置为 1 才能使用
+// <i> vTaskSuspend(), vTaskResume() 这两个 API 函数接口。
+#define INCLUDE_vTaskSuspend 1
+// </e> !INCLUDE_vTaskSuspend
+
+// <e> INCLUDE_xTaskResumeFromISR
+// <i> 任务从中断恢复函数
+// <i> 此宏与 INCLUDE_vTaskSuspend 定义必须同时设置为 1
+// <i> 才能使用 xTaskResumeFromISR() 这个 API 函数接口。
+#define INCLUDE_xTaskResumeFromISR 1
+// </e> !INCLUDE_xTaskResumeFromISR
+
+// <e> INCLUDE_vTaskDelete
+// <i> 任务删除函数
+// <i> 此宏定义必须设置为 1 才能使用 vTaskDelete() 这个 API 函数接口。
+#define INCLUDE_vTaskDelete 1
+// </e> !INCLUDE_vTaskDelete
+
+// <e> INCLUDE_vTaskDelay
+// <i> 任务延时函数 - 相对延时
+// <i> 此宏定义必须设置为 1 才能使用 vTaskDelay() 这个 API 函数接口。
+#define INCLUDE_vTaskDelay 1
+// </e> !INCLUDE_vTaskDelay
+
+// <e> INCLUDE_vTaskDelayUntil
+// <i> 任务延时函数 - 绝对延时
+// <i> 此宏定义必须设置为 1 才能使用 vTaskDelayUntil() 这个 API 函数接口。
+#define INCLUDE_vTaskDelayUntil 1
+// </e> !INCLUDE_vTaskDelayUntil
+
 // <e> INCLUDE_xTaskGetSchedulerState
 // <i> 此宏定义必须设置为 1 才能
 // <i> 使用 xTaskGetSchedulerState() 这个 API 函数接口。
@@ -357,26 +389,9 @@ extern uint32_t SystemCoreClock;
 #define INCLUDE_uxTaskPriorityGet 1
 // </e> !INCLUDE_uxTaskPriorityGet
 
-// <e> INCLUDE_vTaskDelete
-// <i> 此宏定义必须设置为 1 才能使用 vTaskDelete() 这个 API 函数接口。
-#define INCLUDE_vTaskDelete 1
-// </e> !INCLUDE_vTaskDelete
-
 // <e> INCLUDE_vTaskCleanUpResources
 #define INCLUDE_vTaskCleanUpResources 1
 // </e> !INCLUDE_vTaskCleanUpResources
-
-// <e> INCLUDE_vTaskSuspend
-#define INCLUDE_vTaskSuspend 1
-// </e> !INCLUDE_vTaskSuspend
-
-// <e> INCLUDE_vTaskDelayUntil
-#define INCLUDE_vTaskDelayUntil 1
-// </e> !INCLUDE_vTaskDelayUntil
-
-// <e> INCLUDE_vTaskDelay
-#define INCLUDE_vTaskDelay 1
-// </e> !INCLUDE_vTaskDelay
 
 // <e> INCLUDE_eTaskGetState
 #define INCLUDE_eTaskGetState 1
