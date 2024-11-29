@@ -188,12 +188,12 @@ extern uint32_t SystemCoreClock;
 
 // <e> 使能任务通知功能
 // <i> configUSE_TASK_NOTIFICATIONS
-#define configUSE_TASK_NOTIFICATIONS 1
+#define configUSE_TASK_NOTIFICATIONS 0
 // </e> !使能任务通知功能
 
 // <e> 使能互斥信号量
 // <i> configUSE_MUTEXES
-#define configUSE_MUTEXES 1
+#define configUSE_MUTEXES 0
 // </e> !使能互斥信号量
 
 // <e> 使能递归互斥信号量
@@ -203,7 +203,7 @@ extern uint32_t SystemCoreClock;
 
 // <e> 使能计数信号量
 // <i> configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES 1
+#define configUSE_COUNTING_SEMAPHORES 0
 // </e> !使能计数信号量
 
 // <o> 可注册的信号量和消息队列个数
@@ -282,14 +282,14 @@ extern uint32_t SystemCoreClock;
 // =====================================================================
 // <e> 运行时间统计功能
 // <i> configGENERATE_RUN_TIME_STATS
-#define configGENERATE_RUN_TIME_STATS 0
+#define configGENERATE_RUN_TIME_STATS 1
 // </e> !运行时间统计功能
 
 /* 启用可视化跟踪调试 */
 
 // <e> 可视化跟踪调试
 // <i> configUSE_TRACE_FACILITY
-#define configUSE_TRACE_FACILITY 0
+#define configUSE_TRACE_FACILITY 1
 // </e> !可视化跟踪调试
 
 // <e> 统计格式化函数
@@ -302,6 +302,13 @@ extern uint32_t SystemCoreClock;
 #define configUSE_STATS_FORMATTING_FUNCTIONS 1
 // </e> !统计格式化函数
 // </h> !FreeRTOS 与运行时间和任务状态收集有关的配置选项
+
+#if (configGENERATE_RUN_TIME_STATS)
+extern volatile uint32_t CPU_RunTime;
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() (CPU_RunTime = 0ul)
+#define portGET_RUN_TIME_COUNTER_VALUE() CPU_RunTime
+#endif /* configGENERATE_RUN_TIME_STATS */
 
 // <h> FreeRTOS 与协程有关的配置选项
 // =====================================================================
@@ -320,7 +327,7 @@ extern uint32_t SystemCoreClock;
 // =====================================================================
 // <e> 使能软件定时器
 // <i> configUSE_TIMERS
-#define configUSE_TIMERS 1
+#define configUSE_TIMERS 0
 // </e> !使能软件定时器
 
 // <o> 软件定时器优先级
@@ -434,7 +441,7 @@ extern uint32_t SystemCoreClock;
 // <h> FreeRTOS 与中断服务函数有关的配置选项
 // =====================================================================
 #if (configUSE_TRACE_FACILITY)
-#include "trcRecorder.h"
+
 // <e> 启用被 Trace 源码调用的可选函数
 // <i> INCLUDE_xTaskGetCurrentTaskHandle
 #define INCLUDE_xTaskGetCurrentTaskHandle 0
