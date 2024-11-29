@@ -193,7 +193,7 @@ extern uint32_t SystemCoreClock;
 
 // <e> 使能互斥信号量
 // <i> configUSE_MUTEXES
-#define configUSE_MUTEXES 0
+#define configUSE_MUTEXES 1
 // </e> !使能互斥信号量
 
 // <e> 使能递归互斥信号量
@@ -203,7 +203,7 @@ extern uint32_t SystemCoreClock;
 
 // <e> 使能计数信号量
 // <i> configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES 0
+#define configUSE_COUNTING_SEMAPHORES 1
 // </e> !使能计数信号量
 
 // <o> 可注册的信号量和消息队列个数
@@ -398,6 +398,7 @@ extern uint32_t SystemCoreClock;
 // </e> !INCLUDE_eTaskGetState
 
 // <e> INCLUDE_xTimerPendFunctionCall
+// <i> 此宏定义必须设置为 1 才能使用 xEventGroupSetBitsFromISR() 这个 API 函数接口。
 #define INCLUDE_xTimerPendFunctionCall 0
 // </e> !INCLUDE_xTimerPendFunctionCall
 // </h> !FreeRTOS 可选函数配置选项
