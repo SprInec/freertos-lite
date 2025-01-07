@@ -13,14 +13,12 @@ FreeRTOS 精简移植代码 - 适配 STM32 STD 与 HAL 库
 >
 > 若运行报错 `Error: L6218E: Undefined symbol CPU_RunTime (referred from tasks.o).`
 >
-> 请查看 `FreeRTOSConfig.h` 文件第 307~310 行代码，此处代码为**运行时间统计功能**所需代码，若不使用该功能则将 307~310 行代码注释即可，若使用该功能则查看下面 Note 内容
+> 请查看 `FreeRTOSConfig.h` 文件第 307-310 行代码，此处代码为**运行时间统计功能**所需代码，若不使用该功能则将 307-310 行代码注释即可，若使用该功能则查看下面 Note 内容
 
 > [!note]
 >
 > 当使用**运行时间统计功能**时需注意：
 >
-> >  [!tip]
-> >
 > > 若工程中添加使用了 [libstm](https://github.com/SprInec/libstm) 库，在 `bsp_config.h` 的 System configuration -> RTOS 中选择 `FreeRTOS` 即可，无须理会下面的步骤。
 >
 > 第 307~310 行的代码(如下)
