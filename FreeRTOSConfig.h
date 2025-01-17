@@ -146,7 +146,13 @@ extern uint32_t SystemCoreClock;
 // <i> 写入实际的 CPU 内核时钟频率, 即 CPU 指令执行频率, 通常为 Fclk
 // <i> Fclk 为供给 CPU 内核的时钟信号, 我们所说的 CPU 主频为 XX MHZ
 // <i> 就是指的这个时钟信号, 相应的, 1/Fclk 就是 CPU 时钟周期 Tclk
+#define _configCPU_CLOCK_HZ 0
+
+#if (_configCPU_CLOCK_HZ == 0)
 #define configCPU_CLOCK_HZ (SystemCoreClock)
+#else
+#define configCPU_CLOCK_HZ _configCPU_CLOCK_HZ
+#endif
 
 // <o> RTOS 系统节拍中断频率 (Hz)
 // <i> configTICK_RATE_HZ
@@ -183,7 +189,7 @@ extern uint32_t SystemCoreClock;
 
 // <e> 启用队列
 // <i> configUSE_QUEUE_SETS
-#define configUSE_QUEUE_SETS 0
+#define configUSE_QUEUE_SETS 1
 // </e> !启用队列
 
 // <e> 使能任务通知功能
@@ -191,9 +197,14 @@ extern uint32_t SystemCoreClock;
 #define configUSE_TASK_NOTIFICATIONS 0
 // </e> !使能任务通知功能
 
+// <e> 使能二值信号量
+// <i> configUSE_BINARY_SEMAPHORES
+#define configUSE_BINARY_SEMAPHORES 1
+// </e> !使能二值信号量
+
 // <e> 使能互斥信号量
 // <i> configUSE_MUTEXES
-#define configUSE_MUTEXES 0
+#define configUSE_MUTEXES 1
 // </e> !使能互斥信号量
 
 // <e> 使能递归互斥信号量
@@ -233,7 +244,7 @@ extern uint32_t SystemCoreClock;
 // <i> configTOTAL_HEAP_SIZE
 // <i> 单位: KB (1024 bytes)
 // <i> 默认: 36KB (36 * 1024)
-#define configTOTAL_HEAP_SIZE ((size_t)(36 * 1024))
+#define configTOTAL_HEAP_SIZE ((size_t)(48 * 1024))
 // </h> !FreeRTOS 与内存申请有关配置选项
 
 // <h> FreeRTOS 与钩子函数有关的配置选项
@@ -282,14 +293,14 @@ extern uint32_t SystemCoreClock;
 // =====================================================================
 // <e> 运行时间统计功能
 // <i> configGENERATE_RUN_TIME_STATS
-#define configGENERATE_RUN_TIME_STATS 1
+#define configGENERATE_RUN_TIME_STATS 0
 // </e> !运行时间统计功能
 
 /* 启用可视化跟踪调试 */
 
 // <e> 可视化跟踪调试
 // <i> configUSE_TRACE_FACILITY
-#define configUSE_TRACE_FACILITY 1
+#define configUSE_TRACE_FACILITY 0
 // </e> !可视化跟踪调试
 
 // <e> 统计格式化函数
@@ -327,7 +338,7 @@ extern volatile uint32_t CPU_RunTime;
 // =====================================================================
 // <e> 使能软件定时器
 // <i> configUSE_TIMERS
-#define configUSE_TIMERS 0
+#define configUSE_TIMERS 1
 // </e> !使能软件定时器
 
 // <o> 软件定时器优先级
